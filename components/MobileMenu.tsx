@@ -11,7 +11,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileProps) {
     return (
         <div className="fixed inset-0 z-50 md:hidden">
             <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-            <div className="fixed right-0 top-0 h-full w-64 bg-zinc-900 shadow-xl">
+            <div className="fixed right-0 top-0 h-64 w-full bg-zinc-900 shadow-xl">
                 <div className="flex flex-col space-y-6">
                     <div className="flex justify-end">
                         <button onClick={onClose} className="p-2 text-zinc-400 hover:text-white">

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import MobileMenu from './MobileMenu'
 import { MenuIcon } from 'lucide-react'
-
+import Justice from './Justice'
 export default function Navbar() {
     // for checking if the mobile menu is open or not 
     const [isOpen, setIsOpen] = useState(false)
@@ -17,7 +17,7 @@ export default function Navbar() {
                         <div className='flex items-center space-x-3'>
                             <Link href="/" className='flex items-center space-x-3 '>
                                 <div className='h-9 w-9 bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center'>
-                                    <img src="../cl.png" alt="logo" />
+                                   <Justice/>
                                 </div>
                                 <span className='text-lg font-semibold text-white'>CrimeLink</span>
                             </Link>
