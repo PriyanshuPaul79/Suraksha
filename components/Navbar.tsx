@@ -47,24 +47,24 @@ export default function Navbar() {
                         <div className='flex items-center space-x-4'>
                             <Link href='/contact' className='hidden md:block text-sm text-zinc-400  hover:text-white transition-colors'>Contacts</Link>
 
-                            
 
-<button className='ml-5 sm:ml-auto group flex h-9 items-center gap-2 rounded-full bg-red-500/10 pl-4 pr-5 font-light
+
+                            <button className='ml-5 sm:ml-auto group flex h-9 items-center gap-2 rounded-full bg-red-500/10 pl-4 pr-5 font-light
                              text-sm text-red-500 ring-1 ring-inset ring-red-500/20 transition-all hover:bg-red-500/20'>
-    <span className='h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse' /> Emergency: 100
-</button>
+                                <span className='h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse' /> Emergency: 100
+                            </button>
 
 
 
 
                             {/* mobile menu  */}
 
-                        <button className='md:hidden p-2 text-zinc-400 hover:text-white' onClick={()=>{
-                            setIsOpen(true)
+                            <button className='md:hidden p-2 text-zinc-400 hover:text-white' onClick={() => {
+                                setIsOpen(true)
 
-                        }}>
-                            <MenuIcon/>
-                        </button>
+                            }}>
+                                <MenuIcon />
+                            </button>
                         </div>
                     </div>
                 </div>
