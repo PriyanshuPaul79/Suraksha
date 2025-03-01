@@ -4,7 +4,6 @@ import { ArrowRight } from "lucide-react";
 import { MessageCircleWarning } from 'lucide-react';
 import { VenetianMask } from 'lucide-react';
 import { Rss } from 'lucide-react';
-import { features } from "process";
 import { useEffect, useState } from "react";
 
 

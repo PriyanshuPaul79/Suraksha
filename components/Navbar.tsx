@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { useState } from 'react'
 import MobileMenu from './MobileMenu'
 import { MenuIcon } from 'lucide-react'
-import Justice from './Justice'
 import { Cctv } from 'lucide-react';
 
 export default function Navbar() {
