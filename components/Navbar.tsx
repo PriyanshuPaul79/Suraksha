@@ -21,7 +21,7 @@ export default function Navbar() {
                                 <div className='h-9 w-9 bg-gradient-to-br from-lime-400 to-blue-600 flex items-center justify-center rounded-4xl'>
                                    <Cctv/>
                                 </div>
-                                <span className='text-lg font-semibold text-white'>CrimeLink</span>
+                                <span className='text-lg font-semibold text-white'>Suraksha</span>
                             </Link>
                         </div>
 
