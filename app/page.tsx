@@ -144,10 +144,7 @@ export default function Home() {
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             Help Build a Safer Community Today!          </div>
         </div>
-
-
       </div>
-
     </main>
   );
 }
