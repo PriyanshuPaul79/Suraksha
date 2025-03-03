@@ -47,7 +47,7 @@ const StatsSection = () => {
 
 export default function Home() {
   return (
-    <main className="relative px-6 pt-32">
+    <main className="relative px-6 pt-32 overflow-y-hidden">
       <div className="mx-auto max-w-5xl">
         {/* hero here */}
 

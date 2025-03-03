@@ -4,6 +4,7 @@ import { useState } from 'react'
 import MobileMenu from './MobileMenu'
 import { MenuIcon } from 'lucide-react'
 import { Cctv } from 'lucide-react';
+import SubmitReport from '@/app/submit/SubmitReport'
 
 export default function Navbar() {
     // for checking if the mobile menu is open or not 
@@ -27,7 +28,7 @@ export default function Navbar() {
 
                         <div className='hidden md:flex items-center space-x-6'>
 
-                            <Link href={'/submit-report'} className='text-sm text-zinc-400 hover:text-white transition-colors '>
+                            <Link href={'/SubmitReport'} className='text-sm text-zinc-400 hover:text-white transition-colors '>
                                 Submit Report
                             </Link>
 
