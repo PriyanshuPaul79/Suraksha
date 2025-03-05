@@ -1,5 +1,6 @@
 'use client'
 import { useState } from "react"
+import { ReportForm } from "./ReportForm";
 
 export function Report(){
     const[currentNum,setCurrentNum]=useState(1);
@@ -14,7 +15,7 @@ export function Report(){
 
     return(
         <div className="rounded-2xl bg-zinc-900 p-8">
-            {}
+            {currentNum ===1 && <ReportForm onSubmit={complete}/>}
         </div>
     )
 }
