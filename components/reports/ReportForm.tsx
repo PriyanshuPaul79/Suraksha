@@ -1,7 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import LocationInput from "@/components/reports/LocationInput";
+import { resolve } from "path";
+import crypto from 'crypto'
+import { title } from "process";
 
 const report_type = [
     "Theft",
@@ -23,14 +26,52 @@ export function ReportForm({ onSubmit }: ReportFormProps) {
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => setImage(reader.result as string);
-            reader.readAsDataURL(file);
-        }
+        if (!file) return;
+        setIsAnalyzing(true)
+
+        try {
+            const base64 = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onloadend = () => setImage(reader.result as string);
+                reader.readAsDataURL(file);
+            })
+
+
+            const response = await fetch('/api/analyze-image',{
+            method:'POST',
+            headers:{"Content-Type":"application/json"},
+            body: JSON.stringify({image:base64}),
+
+            })
+
+            const data = await response.json();
+
+            if(data.title && data.description && data.reportType){
+                setFormData((prev)=>({
+                    ...prev,
+                    title: data.title,
+                    description: data.description,
+                    specificationType: data.reportType,
+                }));
+                setImage(base64 as string);
+            }
+
+        } catch (error) {
+            console.error("Error analysing the image:", error);
+        } finally{
+            setIsAnalyzing(false);
+        }    
     };
+
+    // generate report id 
+    const reportId = useCallback(()=>{
+        const timeStamp = Date.now().toString();
+        const random = crypto.randomBytes(16).toString("hex");
+        const resultString = `${timeStamp}=${random}`;
+        return crypto.createHash('sha256').update(resultString).digest('hex').slice(0,16)
+    },[]);
 
     const [formData, setFormData] = useState({
         incidentType: "" as reportType | "",
@@ -45,11 +86,38 @@ export function ReportForm({ onSubmit }: ReportFormProps) {
         setIsSubmitting(true);
 
         try {
-            await onSubmit(formData);
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
+            const reportData = {
+                reportId: reportId(),
+                type:formData.incidentType,
+                specificType: formData.specificType,
+                title: formData.title,
+                description:formData.description,
+                location:formData.location,
+                image:image,
+                status:"PENDING",
+            }
+            const response = await fetch("/api/reports/create", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(reportData),
+              });
+        
+              const result = await response.json();
+        
+              if (!response.ok) {
+                throw new Error(result.error || "Failed to submit report");
+              }
+        
+              onSubmit(result);
+              
+            } catch (error) {
+              console.error("Error submitting report:", error);
+            } finally {
+              setIsSubmitting(false);
+            }
+          };
 
     return (
         <form className="space-y-8" onSubmit={handleSubmit}>
@@ -60,11 +128,10 @@ export function ReportForm({ onSubmit }: ReportFormProps) {
                     onClick={() =>
                         setFormData((prev) => ({ ...prev, incidentType: "Emergency" }))
                     }
-                    className={`p-6 rounded-2xl border-2 transition-all duration-200 ${
-                        formData.incidentType === "Emergency"
+                    className={`p-6 rounded-2xl border-2 transition-all duration-200 ${formData.incidentType === "Emergency"
                             ? "bg-red-500/20 border-red-500 shadow-lg shadow-red-500/20"
                             : "bg-zinc-900/50 border-zinc-800 hover:bg-red-500/10 hover:border-red-500/50"
-                    }`}
+                        }`}
                 >
                     <div className="flex flex-col items-center space-y-2">
                         <svg
@@ -92,11 +159,10 @@ export function ReportForm({ onSubmit }: ReportFormProps) {
                     onClick={() =>
                         setFormData((prev) => ({ ...prev, incidentType: "Non Emergency" }))
                     }
-                    className={`p-6 rounded-2xl border-2 transition-all duration-200 ${
-                        formData.incidentType === "Non Emergency"
+                    className={`p-6 rounded-2xl border-2 transition-all duration-200 ${formData.incidentType === "Non Emergency"
                             ? "bg-orange-500/20 border-orange-500 shadow-lg shadow-orange-500/20"
                             : "bg-zinc-900/50 border-zinc-800 hover:bg-orange-500/10 hover:border-orange-500/50"
-                    }`}
+                        }`}
                 >
                     <div className="flex flex-col items-center space-y-2">
                         <svg
@@ -150,7 +216,7 @@ export function ReportForm({ onSubmit }: ReportFormProps) {
                 </label>
             </div>
 
-            <LocationInput/>
+            <LocationInput />
 
             {/* Type of report */}
             <div>
@@ -206,7 +272,7 @@ export function ReportForm({ onSubmit }: ReportFormProps) {
             <button type="submit" disabled={isSubmitting} className="w-full bg-blue-600 text-white px-4 py-3.5 rounded-xl">
                 {isSubmitting ? "Submitting..." : "Submit Report"}
             </button>
-            
+
         </form>
     );
 }
