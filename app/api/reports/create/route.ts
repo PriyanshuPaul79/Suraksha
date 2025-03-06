@@ -18,10 +18,10 @@ export async function POST(request:Request){
           const report = await prisma.report.create({
             data: {
                 reportId,
-                type: type as ReportType,
+                type: ReportType,
                 title,
                 description,
-                reportType: specificType,
+                specificType: specificType,
                 location,
                 image: image || null,
                 status: status || "PENDING",
@@ -32,14 +32,15 @@ export async function POST(request:Request){
             reportId: report.reportId,
             message: "Report submitted successfully",
           });
-        } catch (error) {
-          console.error("Error creating report:", error);
-          return NextResponse.json(
-            {
-              success: false,
-              error: "Failed to submit report",
-            },
-            { status: 500 }
-          );
-        }
-      }
+        }  catch (error) {
+            console.error("Error creating report:", error);
+            return NextResponse.json(
+              {
+                success: false,
+                error: error instanceof Error ? error.message : "Failed to submit report",
+              },
+              { status: 500 }
+            );
+    }
+}
+          

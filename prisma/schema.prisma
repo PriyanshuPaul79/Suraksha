@@ -26,21 +26,22 @@ enum Role {
 }
 
 model Report {
-  id          String       @id @default(cuid())
-  reportId    String       @unique
-  type        ReportType
-  title       String
-  description String
-  location    String?
-  latitude    Float?
-  longitude   Float?
-  image       String?
-  status      ReportStatus @default(PENDING)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  userId      Int?         // Foreign key reference to User (optional)
-  user        User?        @relation(fields: [userId], references: [id])
-  
+    id              String       @id @default(cuid())
+    reportId        String       @unique
+    type            ReportType
+    specificType    String
+    title           String
+    description     String
+    location        String?
+    latitude        Float?
+    longitude       Float?
+    image           String?
+    status          ReportStatus @default(PENDING)
+    createdAt       DateTime     @default(now())
+    updatedAt       DateTime     @updatedAt
+    userId          Int?         // Foreign key reference to User (optional)
+    user            User?        @relation(fields: [userId], references: [id])
+    
   @@index([reportId])
 }
 
