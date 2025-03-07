@@ -902,7 +902,7 @@ export function ReportForm({ onSubmit }: ReportFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
-    incidentType: "" as LocalReportType | "",
+    incidentType: "" as "EMERGENCY" | "NON_EMERGENCY" | "",
     specificType: "",
     location: "",
     description: "",
@@ -968,35 +968,33 @@ export function ReportForm({ onSubmit }: ReportFormProps) {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    if (!formData.incidentType) {
-      alert("Please select a report type.");
+  
+    if (!formData.incidentType || (formData.incidentType !== "EMERGENCY" && formData.incidentType !== "NON_EMERGENCY")) {
+      alert("Please select a valid report type (Emergency or Non-Emergency).");
       return;
     }
-
+  
     setIsSubmitting(true);
-
+  
     try {
       const reportData = {
         reportId: reportId(),
-        type: formData.incidentType, // Ensure this matches the `ReportType` enum
+        type: formData.incidentType, // Ensure this is a string
         specificType: formData.specificType,
         title: formData.title,
         description: formData.description,
         location: formData.location,
-        latitude: formData.latitude,
-        longitude: formData.longitude,
         image: image,
         status: "PENDING",
       };
-
+  
       console.log("Submitting report data:", reportData);
       const response = await fetch("/api/reports/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reportData),
       });
-
+  
       const result = await response.json();
       console.log("API response:", result);
       if (!response.ok) {
@@ -1016,7 +1014,9 @@ export function ReportForm({ onSubmit }: ReportFormProps) {
       <div className="grid grid-cols-2 gap-4">
         <button
           type="button"
-          onClick={() => setFormData((prev) => ({ ...prev, incidentType: "EMERGENCY" }))}
+          onClick={() =>
+            setFormData((prev) => ({ ...prev, incidentType: "EMERGENCY" })) 
+          }
           className={`p-6 rounded-2xl border-2 transition-all duration-200 ${
             formData.incidentType === "EMERGENCY"
               ? "bg-red-500/20 border-red-500 shadow-lg shadow-red-500/20"
@@ -1034,7 +1034,9 @@ export function ReportForm({ onSubmit }: ReportFormProps) {
 
         <button
           type="button"
-          onClick={() => setFormData((prev) => ({ ...prev, incidentType: "NON_EMERGENCY" }))}
+          onClick={() =>
+            setFormData((prev) => ({ ...prev, incidentType: "NON_EMERGENCY" }))
+          }
           className={`p-6 rounded-2xl border-2 transition-all duration-200 ${
             formData.incidentType === "NON_EMERGENCY"
               ? "bg-orange-500/20 border-orange-500 shadow-lg shadow-orange-500/20"

@@ -7,18 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum ReportStatus {
-  PENDING
-  IN_PROGRESS
-  RESOLVED
-  DISMISSED
-}
-
-enum ReportType {
-  EMERGENCY
-  NON_EMERGENCY
-}
-
 enum Role {
   ADMIN
   MODERATOR
@@ -26,23 +14,35 @@ enum Role {
 }
 
 model Report {
-    id              String       @id @default(cuid())
-    reportId        String       @unique
-    type            ReportType
-    specificType    String
-    title           String
-    description     String
-    location        String?
-    latitude        Float?
-    longitude       Float?
-    image           String?
-    status          ReportStatus @default(PENDING)
-    createdAt       DateTime     @default(now())
-    updatedAt       DateTime     @updatedAt
-    userId          Int?         // Foreign key reference to User (optional)
-    user            User?        @relation(fields: [userId], references: [id])
-    
-  @@index([reportId])
+  id          String    @id @default(cuid())
+  reportId    String    @unique
+  type        ReportType
+  specificType String   // Ensure this field exists
+  title       String
+  description String
+  location    String?
+  latitude    Float?
+  longitude   Float?
+  image       String?
+  status      ReportStatus @default(PENDING)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  userId      Int?
+  user        User?     @relation(fields: [userId], references: [id])
+
+  @@map("reports")
+}
+
+enum ReportType {
+  EMERGENCY
+  NON_EMERGENCY
+}
+
+enum ReportStatus {
+  PENDING
+  IN_PROGRESS
+  RESOLVED
+  DISMISSED
 }
 
 model User {
