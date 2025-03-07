@@ -36,7 +36,7 @@ export default function Navbar() {
                                 Track Report
                             </Link>
 
-                            <Link href={'/how-it-work'} className='text-sm text-zinc-400 hover:text-white transition-colors '>
+                            <Link href={'/how-it-works'} className='text-sm text-zinc-400 hover:text-white transition-colors '>
                                 How it Works
                             </Link>
 
