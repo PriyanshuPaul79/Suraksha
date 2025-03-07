@@ -33,26 +33,62 @@
 //   }
   
 //   //update using admin access
+// import { NextResponse } from "next/server";
+// import { NextRequest } from "next/server";
+
+// export async function GET(
+//   request: NextRequest,
+//   { params }: { params: { reportId: string } }
+// ) {
+//   const { reportId } = params;
+
+//   // Validate reportId
+//   if (!reportId) {
+//     return NextResponse.json(
+//       { error: "Report ID is required" },
+//       { status: 400 }
+//     );
+//   }
+
+//   // Fetch report details from the database or an external API
+//   try {
+//     const reportDetails = await fetchReportDetails(reportId); // Replace with your logic
+//     return NextResponse.json(reportDetails, { status: 200 });
+//   } catch (error) {
+//     console.error("Error fetching report details:", error);
+//     return NextResponse.json(
+//       { error: "Failed to fetch report details" },
+//       { status: 500 }
+//     );
+//   }
+// }
+
+// // Example function to fetch report details
+// async function fetchReportDetails(reportId: string) {
+//   // Replace this with your actual logic (e.g., database query or API call)
+//   return { id: reportId, title: "Sample Report", status: "PENDING" };
+// }
+
+
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { reportId: string } }
-) {
-  const { reportId } = params;
-
-  // Validate reportId
-  if (!reportId) {
-    return NextResponse.json(
-      { error: "Report ID is required" },
-      { status: 400 }
-    );
-  }
-
-  // Fetch report details from the database or an external API
+export async function GET(request: NextRequest) {
   try {
-    const reportDetails = await fetchReportDetails(reportId); // Replace with your logic
+    // Extract reportId from the request URL
+    const url = new URL(request.nextUrl);
+    const reportId = url.pathname.split("/").pop(); // Extracts the last segment as the ID
+
+    if (!reportId) {
+      return NextResponse.json(
+        { error: "Report ID is required" },
+        { status: 400 }
+      );
+    }
+
+    // Fetch report details from the database or an external API
+    const reportDetails = await fetchReportDetails(reportId); // Replace with your actual logic
+
     return NextResponse.json(reportDetails, { status: 200 });
   } catch (error) {
     console.error("Error fetching report details:", error);
@@ -63,8 +99,7 @@ export async function GET(
   }
 }
 
-// Example function to fetch report details
+// Example function to fetch report details (Replace with actual DB query)
 async function fetchReportDetails(reportId: string) {
-  // Replace this with your actual logic (e.g., database query or API call)
   return { id: reportId, title: "Sample Report", status: "PENDING" };
 }
