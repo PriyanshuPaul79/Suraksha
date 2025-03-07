@@ -240,7 +240,7 @@ export function ReportForm({ onSubmit }: ReportFormProps) {
       </div>
 
       {/* Submit Button */}
-      <button type="submit" disabled={isSubmitting} className="w-full bg-blue-600 text-white px-4 py-3.5 rounded-xl">
+      <button type="submit" disabled={isSubmitting} className="w-full bg-gradient-to-r from-lime-600 to-green-500 text-white px-4 py-3.5 rounded-xl">
         {isSubmitting ? "Submitting..." : "Submit Report"}
       </button>
     </form>

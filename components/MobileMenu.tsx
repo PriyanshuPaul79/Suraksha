@@ -24,7 +24,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileProps) {
 
                         <Link href="/track-report" className="text-sm text-zinc-400 hover:text-white transition-colors" onClick={onClose}>Track Report</Link>
 
-                        <Link href="/how-it-work" className="text-sm text-zinc-400 hover:text-white transition-colors" onClick={onClose}>How it work</Link>
+                        <Link href="/how-it-works" className="text-sm text-zinc-400 hover:text-white transition-colors" onClick={onClose}>How it work</Link>
 
                         <Link href="/resources" className="text-sm text-zinc-400 hover:text-white transition-colors" onClick={onClose}>Resources </Link>
 

@@ -32,7 +32,8 @@ export default function HowItWorks() {
 
             <h1 className="mt-8 bg-gradient-to-b from-white to-white/80 bg-clip-text text-5xl font-bold tracking-tight text-transparent">
               How SafeReport Works
-              <span className="block text-2xl mt-4 bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
+              <span className="block text-2xl mt-4 bg-gradient-to-r from-green-400 to-lime-300
+ bg-clip-text text-transparent">
                 Your Safety is Our Priority
               </span>
             </h1>
@@ -53,7 +54,7 @@ export default function HowItWorks() {
                   "Fill out our secure form with as much detail as possible. No personal information is required. You can include photos, videos, or documents if available.",
                 icon: (
                   <svg
-                    className="h-6 w-6 text-sky-400"
+                    className="h-6 w-6 text-green-400"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -74,7 +75,7 @@ export default function HowItWorks() {
                   "Your report is immediately encrypted using military-grade protocols. All identifying metadata is stripped from your submission, including IP address and device information.",
                 icon: (
                   <svg
-                    className="h-6 w-6 text-sky-400"
+                    className="h-6 w-6 text-green-400"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -95,7 +96,7 @@ export default function HowItWorks() {
                   "Our system verifies the report's jurisdiction and automatically routes it to the appropriate law enforcement agency. The entire process maintains your anonymity.",
                 icon: (
                   <svg
-                    className="h-6 w-6 text-sky-400"
+                    className="h-6 w-6 text-green-400"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -116,7 +117,7 @@ export default function HowItWorks() {
                   "If needed, law enforcement can communicate with you through our encrypted platform using your anonymous report ID. You maintain control over the conversation.",
                 icon: (
                   <svg
-                    className="h-6 w-6 text-sky-400"
+                    className="h-6 w-6 text-green-400"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -143,7 +144,7 @@ export default function HowItWorks() {
                     </div>
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-sky-400">
+                    <div className="text-sm font-medium text-green-400  ">
                       Step {step.step}
                     </div>
                     <h3 className="mt-2 text-xl font-medium text-white">
@@ -170,7 +171,7 @@ export default function HowItWorks() {
                   description: "All data is encrypted in transit and at rest",
                   icon: (
                     <svg
-                      className="h-6 w-6 text-sky-400"
+                      className="h-6 w-6 text-green-400"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -189,7 +190,7 @@ export default function HowItWorks() {
                   description: "We never store IP addresses or user metadata",
                   icon: (
                     <svg
-                      className="h-6 w-6 text-sky-400"
+                      className="h-6 w-6 text-green-400"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -208,7 +209,7 @@ export default function HowItWorks() {
                   description: "Independent security firms verify our systems",
                   icon: (
                     <svg
-                      className="h-6 w-6 text-sky-400"
+                      className="h-6 w-6 text-green-400"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -243,7 +244,7 @@ export default function HowItWorks() {
             <h2 className="text-2xl font-bold text-white mb-6">
               Ready to Make a Report?
             </h2>
-            <button className="group relative inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-sky-500 px-8 text-sm font-medium text-white transition-all hover:bg-sky-400">
+            <button className="group relative inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-lime-600 to-green-500 px-8 text-sm font-medium text-white transition-all hover:bg-green-800">
               Start Anonymous Report
               <svg
                 className="h-4 w-4 transition-transform group-hover:translate-x-0.5"

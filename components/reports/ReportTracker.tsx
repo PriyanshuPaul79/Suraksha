@@ -63,7 +63,7 @@ export default function ReportTracker() {
         </div>
         <h1 className="mt-6 bg-gradient-to-b from-white to-white/80 bg-clip-text text-4xl font-bold tracking-tight text-transparent">
           Track Your Report
-          <span className="block bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
+          <span className="block bg-gradient-to-r from-green-400 to-lime-300 bg-clip-text text-transparent">
             Stay Informed
           </span>
         </h1>
@@ -131,9 +131,9 @@ export default function ReportTracker() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-sky-500 to-blue-600 
-                         text-white py-3 px-4 rounded-xl hover:from-sky-400 
-                         hover:to-blue-500 transition-all duration-200 
+                className="w-full bg-gradient-to-r from-lime-600 to-green-500
+                         text-white py-3 px-4 rounded-xl hover:from-lime-800 
+                         hover:to-green-800 transition-all duration-200 
                          disabled:opacity-50 disabled:cursor-not-allowed
                          flex items-center justify-center space-x-2"
               >
