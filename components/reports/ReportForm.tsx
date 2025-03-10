@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useState } from "react";
-import LocationInput from "@/components/reports/LocationInput";
+import LocationInput from "../../components/reports/LocationInput";
 import crypto from "crypto";
 
 const report_type = [

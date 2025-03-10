@@ -6,6 +6,8 @@ import { ReportStatus, ReportType } from "@prisma/client";
 import prisma from "../../../lib/prisma";
 
 // import { authOptions } from "@/lib/auth";
+import { authOptions } from "../../../lib/auth";
+
 
 export async function GET(req: Request) {
   try {
