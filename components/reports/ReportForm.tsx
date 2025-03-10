@@ -26,11 +26,9 @@ export function ReportForm({ onSubmit }: ReportFormProps) {
   const [formData, setFormData] = useState({
     incidentType: "" as "EMERGENCY" | "NON_EMERGENCY" | "",
     specificType: "",
-    location: "",
+    location: "", // Add location to formData
     description: "",
     title: "",
-    latitude: null as number | null,
-    longitude: null as number | null,
   });
 
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,44 +77,42 @@ export function ReportForm({ onSubmit }: ReportFormProps) {
     return crypto.createHash("sha256").update(resultString).digest("hex").slice(0, 16);
   }, []);
 
-  const handleLocationChange = (location: string, latitude: number, longitude: number) => {
+  const handleLocationChange = (location: string) => {
     setFormData((prev) => ({
       ...prev,
-      location,
-      latitude,
-      longitude,
+      location, // Update location in formData
     }));
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-  
+
     if (!formData.incidentType || (formData.incidentType !== "EMERGENCY" && formData.incidentType !== "NON_EMERGENCY")) {
       alert("Please select a valid report type (Emergency or Non-Emergency).");
       return;
     }
-  
+
     setIsSubmitting(true);
-  
+
     try {
       const reportData = {
         reportId: reportId(),
-        type: formData.incidentType, // Ensure this is a string
+        type: formData.incidentType,
         specificType: formData.specificType,
         title: formData.title,
         description: formData.description,
-        location: formData.location,
+        location: formData.location, // Include location in the report data
         image: image,
         status: "PENDING",
       };
-  
+
       console.log("Submitting report data:", reportData);
       const response = await fetch("/api/reports/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reportData),
       });
-  
+
       const result = await response.json();
       console.log("API response:", result);
       if (!response.ok) {
@@ -137,7 +133,7 @@ export function ReportForm({ onSubmit }: ReportFormProps) {
         <button
           type="button"
           onClick={() =>
-            setFormData((prev) => ({ ...prev, incidentType: "EMERGENCY" })) 
+            setFormData((prev) => ({ ...prev, incidentType: "EMERGENCY" }))
           }
           className={`p-6 rounded-2xl border-2 transition-all duration-200 ${
             formData.incidentType === "EMERGENCY"
@@ -195,7 +191,10 @@ export function ReportForm({ onSubmit }: ReportFormProps) {
       </div>
 
       {/* Location Input */}
-      <LocationInput onLocationChange={handleLocationChange} />
+      <LocationInput
+        value={formData.location}
+        onChange={handleLocationChange} // Pass the handleLocationChange function
+      />
 
       {/* Report Type (Specific Type) */}
       <div>
@@ -246,3 +245,5 @@ export function ReportForm({ onSubmit }: ReportFormProps) {
     </form>
   );
 }
+
+
