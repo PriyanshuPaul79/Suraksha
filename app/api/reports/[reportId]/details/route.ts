@@ -32,38 +32,75 @@
 //     }
 //   }
 
+  // import { NextResponse, NextRequest } from "next/server";
+  // import { PrismaClient } from "@prisma/client";
+  
+  // const prisma = new PrismaClient();
+  
+  // export async function GET(
+  //   req: NextRequest,
+  //   { params }: { params: { reportId: string } }
+  // ) {
+  //   try {
+  //     if (!params?.reportId) {
+  //       return NextResponse.json({ error: "Missing report ID" }, { status: 400 });
+  //     }
+  
+  //     // Fetch report with correct ID field (ensure your schema has "reportId")
+  //     const report = await prisma.report.findUnique({
+  //       where: { reportId: params.reportId }, 
+  //     });
+  
+  //     if (!report) {
+  //       return NextResponse.json({ error: "Report not found" }, { status: 404 });
+  //     }
+  
+  //     return NextResponse.json(report);
+  //   } catch (error) {
+  //     console.error("Error fetching report details:", error);
+  //     return NextResponse.json(
+  //       { error: "Failed to fetch report details" },
+  //       { status: 500 }
+  //     );
+  //   } finally {
+  //     await prisma.$disconnect();
+  //   }
+  // }
+  
+
+
   import { NextResponse, NextRequest } from "next/server";
-  import { PrismaClient } from "@prisma/client";
-  
-  const prisma = new PrismaClient();
-  
-  export async function GET(
-    req: NextRequest,
-    { params }: { params: { reportId: string } }
-  ) {
-    try {
-      if (!params?.reportId) {
-        return NextResponse.json({ error: "Missing report ID" }, { status: 400 });
-      }
-  
-      // Fetch report with correct ID field (ensure your schema has "reportId")
-      const report = await prisma.report.findUnique({
-        where: { reportId: params.reportId }, 
-      });
-  
-      if (!report) {
-        return NextResponse.json({ error: "Report not found" }, { status: 404 });
-      }
-  
-      return NextResponse.json(report);
-    } catch (error) {
-      console.error("Error fetching report details:", error);
-      return NextResponse.json(
-        { error: "Failed to fetch report details" },
-        { status: 500 }
-      );
-    } finally {
-      await prisma.$disconnect();
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+export async function GET(req: NextRequest) {
+  try {
+    // Extract reportId from URL using req.nextUrl
+    const url = new URL(req.nextUrl);
+    const reportId = url.pathname.split("/").slice(-2, -1)[0]; // Extracts [reportId] from URL
+
+    if (!reportId) {
+      return NextResponse.json({ error: "Missing report ID" }, { status: 400 });
     }
+
+    // Fetch report
+    const report = await prisma.report.findUnique({
+      where: { reportId }, // Ensure this matches your Prisma schema
+    });
+
+    if (!report) {
+      return NextResponse.json({ error: "Report not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(report);
+  } catch (error) {
+    console.error("Error fetching report details:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch report details" },
+      { status: 500 }
+    );
+  } finally {
+    await prisma.$disconnect();
   }
-  
+}
