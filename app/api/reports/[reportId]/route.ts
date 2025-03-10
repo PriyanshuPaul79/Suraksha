@@ -43,7 +43,7 @@
 
 
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
+import prisma from "../../../../lib/prisma";
 import { ReportStatus } from "@prisma/client";
 import { NextRequest } from "next/server";
 
