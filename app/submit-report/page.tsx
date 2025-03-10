@@ -1,4 +1,4 @@
-import {Report} from "@/components/reports/Report"; 
+import {Report} from "../../components/reports/Report"; 
 export default function SubmitReport() {
   return (
 
