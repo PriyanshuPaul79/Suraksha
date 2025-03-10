@@ -1,5 +1,5 @@
 'use client'
-import ReportTracker from '@/components/reports/ReportTracker'
+import {ReportTracker} from '@/components/reports/ReportTracker'
 export default function TrackReport() {
     return (
         <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center">

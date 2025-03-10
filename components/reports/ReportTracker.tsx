@@ -1,7 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Search, Loader2 } from 'lucide-react'; // Use Loader2 instead of Loader
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Search, Loader } from "lucide-react";
 
 interface ReportDetails {
   id: string;
@@ -13,20 +14,23 @@ interface ReportDetails {
   location: string;
 }
 
-export default function ReportTracker() {
-  const [reportId, setReportId] = useState('');
-  const [error, setError] = useState('');
+export function ReportTracker() {
+  const [reportId, setReportId] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [reportDetails, setReportDetails] = useState<ReportDetails | null>(null);
+  const [reportDetails, setReportDetails] = useState<ReportDetails | null>(
+    null
+  );
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setReportDetails(null);
     setLoading(true);
 
     if (!reportId.trim()) {
-      setError('Please enter a report ID');
+      setError("Please enter a report ID");
       setLoading(false);
       return;
     }
@@ -34,20 +38,12 @@ export default function ReportTracker() {
     try {
       const response = await fetch(`/api/reports/${reportId}/details`);
       if (!response.ok) {
-        if (response.status === 404) {
-          throw new Error('Report not found');
-        } else {
-          throw new Error('Failed to fetch report details');
-        }
+        throw new Error("Report not found");
       }
       const data = await response.json();
       setReportDetails(data);
     } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : 'Unable to find report. Please check the ID and try again.'
-      );
+      setError("Unable to find report. Please check the ID and try again.");
     } finally {
       setLoading(false);
     }
@@ -63,7 +59,7 @@ export default function ReportTracker() {
         </div>
         <h1 className="mt-6 bg-gradient-to-b from-white to-white/80 bg-clip-text text-4xl font-bold tracking-tight text-transparent">
           Track Your Report
-          <span className="block bg-gradient-to-r from-green-400 to-lime-300 bg-clip-text text-transparent">
+          <span className="block bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
             Stay Informed
           </span>
         </h1>
@@ -78,15 +74,15 @@ export default function ReportTracker() {
           className={`transition-all duration-300 ease-in-out 
           ${
             reportDetails
-              ? 'w-full grid md:grid-cols-2 gap-8'
-              : 'max-w-lg w-full'
+              ? "w-full grid md:grid-cols-2 gap-8"
+              : "max-w-lg w-full"
           }`}
         >
           {/* Form Section */}
           <div
             className={`bg-zinc-900/50 backdrop-blur-xl rounded-2xl border 
             border-white/5 p-6 w-full transition-all duration-300
-            ${reportDetails ? '' : 'mx-auto'}`}
+            ${reportDetails ? "" : "mx-auto"}`}
           >
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="relative">
@@ -131,32 +127,32 @@ export default function ReportTracker() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-lime-600 to-green-500
-                         text-white py-3 px-4 rounded-xl hover:from-lime-800 
-                         hover:to-green-800 transition-all duration-200 
+                className="w-full bg-gradient-to-r from-sky-500 to-blue-600 
+                         text-white py-3 px-4 rounded-xl hover:from-sky-400 
+                         hover:to-blue-500 transition-all duration-200 
                          disabled:opacity-50 disabled:cursor-not-allowed
                          flex items-center justify-center space-x-2"
               >
                 {loading ? (
-                  <Loader2 className="w-5 h-5 animate-spin" />
+                  <Loader className="w-5 h-5 animate-spin" />
                 ) : (
                   <Search className="w-5 h-5" />
                 )}
-                <span>{loading ? 'Searching...' : 'Track Report'}</span>
+                <span>{loading ? "Searching..." : "Track Report"}</span>
               </button>
             </form>
           </div>
 
           {/* Results Section */}
-          {reportDetails && (
-            <div
-              className={`transition-all duration-300 
-              ${
-                reportDetails
-                  ? 'opacity-100 translate-x-0'
-                  : 'opacity-0 translate-x-8'
-              }`}
-            >
+          <div
+            className={`transition-all duration-300 
+            ${
+              reportDetails
+                ? "opacity-100 translate-x-0"
+                : "opacity-0 translate-x-8 absolute"
+            }`}
+          >
+            {reportDetails && (
               <div className="rounded-xl border border-white/5 bg-black/30 backdrop-blur-xl p-6 h-full">
                 <h2 className="text-xl font-semibold text-white flex items-center gap-2 mb-6">
                   <div className="h-2 w-2 rounded-full bg-sky-400" />
@@ -189,9 +185,9 @@ export default function ReportTracker() {
                       {new Date(reportDetails.createdAt).toLocaleDateString(
                         undefined,
                         {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
                         }
                       )}
                     </span>
@@ -219,8 +215,8 @@ export default function ReportTracker() {
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -229,10 +225,10 @@ export default function ReportTracker() {
 
 function getStatusColor(status: string): string {
   const statusColors: Record<string, string> = {
-    pending: 'text-yellow-400',
-    processing: 'text-sky-400',
-    completed: 'text-emerald-400',
-    failed: 'text-red-400',
+    pending: "text-yellow-400",
+    processing: "text-sky-400",
+    completed: "text-emerald-400",
+    failed: "text-red-400",
   };
-  return statusColors[status.toLowerCase()] || 'text-white';
+  return statusColors[status.toLowerCase()] || "text-white";
 }
