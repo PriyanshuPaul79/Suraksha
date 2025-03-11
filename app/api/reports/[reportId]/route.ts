@@ -79,7 +79,7 @@
 
 import { NextResponse } from "next/server";
 import prisma from "../../../../lib/prisma";
-import { Prisma, ReportStatus } from "@prisma/client"; // ✅ Correct Import
+import { Prisma , ReportStatus } from "@prisma/client";
 import { NextRequest } from "next/server";
 
 export async function PATCH(request: NextRequest) {
