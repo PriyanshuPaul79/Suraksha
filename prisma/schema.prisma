@@ -23,6 +23,7 @@ model Report {
   id          String   @id @default(cuid())
   reportId    String      @unique
   type        ReportType
+  specificType String
   title       String
   description String
   reportType  String
