@@ -7,37 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  ADMIN
-  MODERATOR
-  USER
-}
-
-model Report {
-  id          String    @id @default(cuid())
-  reportId    String    @unique
-  type        ReportType
-  specificType String   // Ensure this field exists
-  title       String
-  description String
-  location    String?
-  latitude    Float?
-  longitude   Float?
-  image       String?
-  status      ReportStatus @default(PENDING)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  userId      Int?
-  user        User?     @relation(fields: [userId], references: [id])
-
-  @@map("reports")
-}
-
-enum ReportType {
-  EMERGENCY
-  NON_EMERGENCY
-}
-
 enum ReportStatus {
   PENDING
   IN_PROGRESS
@@ -45,11 +14,38 @@ enum ReportStatus {
   DISMISSED
 }
 
+enum ReportType {
+  EMERGENCY
+  NON_EMERGENCY
+}
+
+model Report {
+  id          String   @id @default(cuid())
+  reportId    String      @unique
+  type        ReportType
+  title       String
+  description String
+  reportType  String
+  location    String?
+  latitude    Float?
+  longitude   Float?
+  image       String?
+  status      ReportStatus @default(PENDING)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  @@index([reportId])
+}
+
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
   name     String
   password String
-  role     String   @default("USER")
-  reports  Report[]
+  role     Role     @default(USER)
 }
+
+enum Role {
+  ADMIN
+  MODERATOR
+  USER
+} 
